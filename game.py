@@ -633,4 +633,11 @@ def turno_jogador(m):
             limpa_campo(m, str_para_coordenada(turnoC))
         elif turnoLM == 'M':
             alterna_bandeira(obtem_parcela(m, str_para_coordenada(turnoC)))
+    
+
+    if str_para_coordenada(jogada) in obtem_coordenadas(m, 'minadas'):
+            if not (eh_parcela_marcada(obtem_parcela(m, str_para_coordenada(jogada)))):
+                return False
+
+    return True
         
