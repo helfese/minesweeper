@@ -344,4 +344,31 @@ def turno_jogador(m):
                 return False
 
     return True
-        
+
+def minas(col, lin, n, d, s):
+    
+    if not (isinstance(col, str) and len(col) == 1 and 'A' <= col <= 'Z' and isinstance(lin, int) and 1 <= lin <= 99 \
+        and isinstance(n, int) and 1 <= n <= (abs(ord('A') - ord(col)) + 1) * lin - 1 - 3 \
+        and isinstance(d, int) and isinstance(s, int) and s > 0 and ((d == 32 and s <= 2 ** 32 - 1) or (d == 64 and s <= 2 ** 64 - 1))):
+        raise ValueError('minas: argumentos invalidos')
+
+    m = cria_campo(col, lin)
+    def parcelas_marcadas(m):
+        parcela_marcada = 0
+        for item in m:
+            if eh_parcela_marcada(item[0]):
+                parcela_marcada += 1
+        return parcela_marcada
+
+    print('   [Bandeiras {}/{}]'.format(parcelas_marcadas(m), n))
+    print(campo_para_str(m))
+    input_incorrect = True
+    while input_incorrect:
+        turnoC = input('Escolha uma coordenada:')
+        if len(turnoC) == 3 and eh_coordenada(str_para_coordenada(turnoC)) and eh_coordenada((turnoC[0], int(turnoC[1:]))) and eh_coordenada_do_campo(m, str_para_coordenada(turnoC)):
+            input_incorrect = False
+    
+    coloca_minas(m, str_para_coordenada(turnoC), cria_gerador(d, s), n)
+    limpa_campo(m, str_para_coordenada(turnoC))
+    print('   [Bandeiras {}/{}]'.format(parcelas_marcadas(m), n))
+    print(campo_para_str(m))
