@@ -372,3 +372,32 @@ def minas(col, lin, n, d, s):
     limpa_campo(m, str_para_coordenada(turnoC))
     print('   [Bandeiras {}/{}]'.format(parcelas_marcadas(m), n))
     print(campo_para_str(m))
+    
+    while not jogo_ganho(m):
+        
+        global jogada
+        turno_jogador(m)
+
+        print('   [Bandeiras {}/{}]'.format(parcelas_marcadas(m), n))
+        print(campo_para_str(m))
+        
+        #print(obtem_coordenadas(m, 'minadas'))
+        #print(str_para_coordenada(turnoC))
+        #print(str_para_coordenada(jogada))
+
+        
+        #if str_para_coordenada(turnoC) in obtem_coordenadas(m, 'minadas'):
+
+        if str_para_coordenada(jogada) in obtem_coordenadas(m, 'minadas'):
+            if not (eh_parcela_marcada(obtem_parcela(m, str_para_coordenada(jogada)))):
+                print('BOOOOOOOM!!!')
+                return False
+    
+    print('VITORIA!!!')
+    return True
+
+#print(minas('Z', 5, 6, 32, 2))
+#print(minas('Z', 5, 10, 32, 15))
+#print(minas('R', 8, -2, 64, 10))
+#print(cria_copia_campo(cria_campo('D', 4)))
+#print(turno_jogador(cria_campo('D', 4)))
